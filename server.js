@@ -3,10 +3,17 @@ const bodyParser = require('body-parser')
 const app = express()
 const port = 3000
 
+const mongoose = require('mongoose')
+const keys = require('./keys')
+const Member = require('./models/Member.js')
+mongoose.connect(keys.atlasPW, {
+    useNewUrlParser: true
+})
+.then(() => console.log("Connected To Atlas"))
+
 app.use(express.static("public"))
 app.use(bodyParser.json())
 
-let data = [];
 app.post('/api', function(req, res) {
     const carMake = req.body.carmake
     const carModel = req.body.carmodel
@@ -14,23 +21,30 @@ app.post('/api', function(req, res) {
     const year = req.body.year
     const message = req.body.message
 
-    const temp = {
+    const data = {
         username: userName,
         year,
         carmake: carMake,
         carmodel: carModel,
         message
     }
-
-    data.push(temp)
     console.log(data)
-    // console.log(carMake, carModel, color)
-    const reply = `Congrats ${userName}, owner of a ${year} ${carMake} ${carModel}, you are now a member! .. Saying \'${message}\' to all current members!`
-    res.send(reply)
+
+    const member = new Member(data) 
+        member.save()
+        .then(() => res.send(data))
+        .catch(err => console.log(err))
 })
 
+
 app.get('/getallmembers', function(req, res) {
-    res.send(data)
+    Member.find({}, function(err, members) {
+        if (err) {
+            res.send("Something went wrong retreiving all members")
+        } else {
+            res.send(members)
+        }
+    })
 })
 
 app.get('/showclub/:clubname', function(req, res) {

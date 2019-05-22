@@ -33,6 +33,7 @@ function handleSubmit() {
 function getAllMembers() {
     axios.get('/getallmembers') 
         .then(response => {
-            document.getElementById('result').innerHTML = JSON.stringify(response.data)
+            let output = JSON.stringify(response.data)
+            document.getElementById('result').innerHTML = output
         })
 }
