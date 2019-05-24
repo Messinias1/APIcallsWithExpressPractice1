@@ -15,17 +15,19 @@ app.use(express.static("public"))
 app.use(bodyParser.json())
 
 app.post('/api', function(req, res) {
-    const carMake = req.body.carmake
-    const carModel = req.body.carmodel
-    const userName = req.body.username
-    const year = req.body.year
-    const message = req.body.message
+    // const carMake = req.body.carmake
+    // const carModel = req.body.carmodel
+    // const userName = req.body.username
+    // const year = req.body.year
+    // const message = req.body.message
+
+    const { carmake, carmodel, username, year, message  } = req.body
 
     const data = {
-        username: userName,
+        username,
         year,
-        carmake: carMake,
-        carmodel: carModel,
+        carmake,
+        carmodel,
         message
     }
     console.log(data)
@@ -38,7 +40,7 @@ app.post('/api', function(req, res) {
 
 
 app.get('/getallmembers', function(req, res) {
-    Member.find({}, function(err, members) {
+    Member.find({username: "Carl"}, function(err, members) {
         if (err) {
             res.send("Something went wrong retreiving all members")
         } else {
