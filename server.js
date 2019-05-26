@@ -6,6 +6,7 @@ const port = 3000
 const mongoose = require('mongoose')
 const keys = require('./keys')
 const Member = require('./models/Member.js')
+
 mongoose.connect(keys.atlasPW, {
     useNewUrlParser: true
 })
@@ -40,7 +41,7 @@ app.post('/api', function(req, res) {
 
 
 app.get('/getallmembers', function(req, res) {
-    Member.find({username: "Carl"}, function(err, members) {
+    Member.find({}, function(err, members) {
         if (err) {
             res.send("Something went wrong retreiving all members")
         } else {

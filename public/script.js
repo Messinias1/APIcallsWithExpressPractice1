@@ -9,31 +9,46 @@ function getClubInfo() {
 }
 
 function handleSubmit() {
-    const userName = document.getElementById("user-name").value
+    const username = document.getElementById("user-name").value
     const year = document.getElementById("year").value
-    const carMake = document.getElementById("car-make").value
-    const carModel = document.getElementById("car-model").value
+    const carmake = document.getElementById("car-make").value
+    const carmodel = document.getElementById("car-model").value
     const message = document.getElementById("message").value
 
-    console.log(userName, year, carMake, carModel, message)
+    console.log(username, year, carmake, carmodel, message)
 
     const payload = {
-        username: userName,
+        username,
         year,
-        carmake: carMake,
-        carmodel: carModel,
+        carmake,
+        carmodel,
         message
     }
     axios.post('/api', payload)
         .then(response => {
             console.log(response)
+            let output = JSON.stringify(response.data)
+            document.getElementById('result').innerHTML = output
         })
 }
 
 function getAllMembers() {
     axios.get('/getallmembers') 
         .then(response => {
-            let output = JSON.stringify(response.data)
-            document.getElementById('result').innerHTML = output
+            let data = response.data
+            console.log(data)
+            console.log(data[0])
+            for (let i = 0; i < data.length; i++) {
+                let names = data[i].username
+                let year = data[i].year
+                let make = data[i].carmake
+                let model = data[i].carmodel
+                let message = data[i].message
+                if (names) {
+                    // document.getElementById('results').innerHTML +=  names + ' ' + year + ' ' + make + ' ' + model + ' ' + message + '\n';
+                    let output = `${names} ${year} ${make} ${model} ${message}`.split('\n')
+                    document.getElementById('results').innerHTML += output
+                }
+            }
         })
 }
