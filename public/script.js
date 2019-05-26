@@ -46,8 +46,9 @@ function getAllMembers() {
                 let message = data[i].message
                 if (names) {
                     // document.getElementById('results').innerHTML +=  names + ' ' + year + ' ' + make + ' ' + model + ' ' + message + '\n';
-                    let output = `${names} ${year} ${make} ${model} ${message}`.split('\n')
-                    document.getElementById('results').innerHTML += output
+                    let output = `${names} ${year} ${make} ${model} ${message} <br></br>`
+                    console.log(output)
+                    document.getElementById('results').innerHTML += output;
                 }
             }
         })
