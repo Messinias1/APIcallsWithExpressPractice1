@@ -36,17 +36,18 @@ function getAllMembers() {
     axios.get('/getallmembers') 
         .then(response => {
             let data = response.data
-            console.log(data)
-            console.log(data[0])
+            // console.log(data)
+            // console.log(data[0])
             for (let i = 0; i < data.length; i++) {
-                let names = data[i].username
+
+                let name = data[i].username
                 let year = data[i].year
                 let make = data[i].carmake
                 let model = data[i].carmodel
                 let message = data[i].message
-                if (names) {
-                    // document.getElementById('results').innerHTML +=  names + ' ' + year + ' ' + make + ' ' + model + ' ' + message + '\n';
-                    let output = `${names} ${year} ${make} ${model} ${message} <br></br>`
+
+                if (data) {
+                    let output = `${name} ${year} ${make} ${model} ${message} <br></br>`
                     console.log(output)
                     document.getElementById('results').innerHTML += output;
                 }
